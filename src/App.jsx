@@ -11,13 +11,33 @@ const App = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
 
+  useEffect(() => {
+    if (window.localStorage.getItem('loggedInUser')) {
+      const loggedInUser = JSON.parse(
+        window.localStorage.getItem('loggedInUser')
+      );
+      setUser(loggedInUser);
+    }
+  }, []);
+
   const loginUser = async (userObject) => {
     const loggedInUser = await getUser(userObject);
     setUser(loggedInUser);
+    window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+  };
+
+  const logOutUser = () => {
+    window.localStorage.removeItem('loggedInUser');
+    setUser(null);
   };
 
   if (user) {
-    return BlogList(user.username, blogs);
+    return (
+      <>
+        <LoggedInUserInfo username={user.username} logOutUser={logOutUser} />
+        <BlogList blogs={blogs} />
+      </>
+    );
   }
 
   return <LoginForm loginUser={loginUser} />;
@@ -58,15 +78,23 @@ const LoginForm = ({ loginUser }) => {
   );
 };
 
-const BlogList = (username, blogs) => {
+const BlogList = ({ blogs }) => {
   return (
     <div>
       <h1>blogs</h1>
-      <p>{username} is logged in</p>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
     </div>
+  );
+};
+
+const LoggedInUserInfo = ({ username, logOutUser }) => {
+  return (
+    <>
+      <p>{username} is logged in</p>
+      <button onClick={() => logOutUser()}>Logout</button>
+    </>
   );
 };
 
