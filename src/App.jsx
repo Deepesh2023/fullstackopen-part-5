@@ -8,7 +8,9 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll().then((blogs) => {
+      setBlogs(blogs);
+    });
   }, []);
 
   useEffect(() => {
@@ -26,6 +28,13 @@ const App = () => {
     window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
   };
 
+  const addNewBlog = async (newBlog) => {
+    const token = user.token;
+
+    const addedBlog = await blogService.addNew(newBlog, token);
+    setBlogs(blogs.concat(addedBlog));
+  };
+
   const logOutUser = () => {
     window.localStorage.removeItem('loggedInUser');
     setUser(null);
@@ -35,6 +44,7 @@ const App = () => {
     return (
       <>
         <LoggedInUserInfo username={user.username} logOutUser={logOutUser} />
+        <NewBlogForm addNewBlog={addNewBlog} />
         <BlogList blogs={blogs} />
       </>
     );
@@ -56,21 +66,25 @@ const LoginForm = ({ loginUser }) => {
     <>
       <h2>Log into application</h2>
       <form onSubmit={loginButtonAction}>
-        <label htmlFor="username">Username: </label>
-        <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
+        <div>
+          <label htmlFor="username">Username: </label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
 
-        <label htmlFor="password">Password: </label>
-        <input
-          id="password"
-          type="text"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
+        <div>
+          <label htmlFor="password">Password: </label>
+          <input
+            id="password"
+            type="text"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
 
         <button type="submit">Login</button>
       </form>
@@ -94,6 +108,53 @@ const LoggedInUserInfo = ({ username, logOutUser }) => {
     <>
       <p>{username} is logged in</p>
       <button onClick={() => logOutUser()}>Logout</button>
+    </>
+  );
+};
+
+const NewBlogForm = ({ addNewBlog }) => {
+  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' });
+
+  return (
+    <>
+      <h2>Create new</h2>
+      <div>
+        <label htmlFor="title">Title: </label>
+        <input
+          type="text"
+          id="title"
+          value={newBlog.title}
+          onChange={({ target }) =>
+            setNewBlog({ ...newBlog, title: target.value })
+          }
+        />
+      </div>
+
+      <div>
+        <label htmlFor="author">author: </label>
+        <input
+          type="text"
+          id="author"
+          value={newBlog.author}
+          onChange={({ target }) =>
+            setNewBlog({ ...newBlog, author: target.value })
+          }
+        />
+      </div>
+
+      <div>
+        <label htmlFor="url">url: </label>
+        <input
+          type="text"
+          id="url"
+          value={newBlog.url}
+          onChange={({ target }) =>
+            setNewBlog({ ...newBlog, url: target.value })
+          }
+        />
+      </div>
+
+      <button onClick={() => addNewBlog(newBlog)}>Add blog</button>
     </>
   );
 };
