@@ -20,9 +20,11 @@ const Blog = ({ blog, token }) => {
   if (showDetails) {
     return (
       <div style={blogStyle}>
-        <h4>{blog.title}</h4>
+        <h4>
+          {blog.title}, {blog.author}
+        </h4>
         <p>{blog.url}</p>
-        <p>{blog.author}</p>
+        <p>{blog.user.username.toString()}</p>
         <p>
           Likes: {likes}
           <button onClick={likeButtonAction}>Like</button>
@@ -34,7 +36,9 @@ const Blog = ({ blog, token }) => {
 
   return (
     <div style={blogStyle}>
-      <h4>{blog.title}</h4>
+      <h4>
+        {blog.title}, {blog.author}
+      </h4>
       <button onClick={() => setShowDetails(!showDetails)}>View</button>
     </div>
   );
