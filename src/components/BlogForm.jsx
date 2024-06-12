@@ -1,19 +1,7 @@
 import { useState } from 'react';
-import blogService from '../services/blogs';
 
-const BlogForm = ({ user, userNotification }) => {
+const BlogForm = ({ addNewBlog }) => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' });
-
-  const addNewBlog = async (newBlog) => {
-    const token = user.token;
-    try {
-      const addedBlog = await blogService.addNew(newBlog, token);
-      setBlogs(blogs.concat(addedBlog));
-      userNotification('Blog added!', false);
-    } catch (exception) {
-      userNotification('Please fill in the correct fields', true);
-    }
-  };
 
   return (
     <>

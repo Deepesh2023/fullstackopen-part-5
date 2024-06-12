@@ -1,4 +1,5 @@
-import { useState, useEffect, useSyncExternalStore } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 import blogService from './services/blogs';
 import getUser from './services/login';
 
@@ -7,6 +8,7 @@ import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import BlogList from './components/BlogList';
 import LoggedInUserInfo from './components/LoggedInUserInfo';
+import Togglable from './components/Togglable';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -15,6 +17,8 @@ const App = () => {
     message: null,
     isError: false,
   });
+
+  const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => {
@@ -37,6 +41,18 @@ const App = () => {
     window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
   };
 
+  const addNewBlog = async (newBlog) => {
+    const token = user.token;
+    try {
+      const addedBlog = await blogService.addNew(newBlog, token);
+      blogFormRef.current.hideFormAfterNewPost();
+      setBlogs(blogs.concat(addedBlog));
+      userNotification('Blog added!', false);
+    } catch (exception) {
+      userNotification('Please fill in the correct fields', true);
+    }
+  };
+
   const logOutUser = () => {
     window.localStorage.removeItem('loggedInUser');
     setUser(null);
@@ -55,7 +71,9 @@ const App = () => {
       <>
         <LoggedInUserInfo username={user.username} logOutUser={logOutUser} />
         <Notification notification={notification} />
-        <BlogForm user={user} userNotification={userNotification} />
+        <Togglable ref={blogFormRef}>
+          <BlogForm user={user} addNewBlog={addNewBlog} />
+        </Togglable>
         <BlogList blogs={blogs} />
       </>
     );
