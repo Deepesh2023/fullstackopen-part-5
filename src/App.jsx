@@ -74,7 +74,7 @@ const App = () => {
         <Togglable ref={blogFormRef}>
           <BlogForm user={user} addNewBlog={addNewBlog} />
         </Togglable>
-        <BlogList blogs={blogs} />
+        <BlogList blogs={blogs} token={user.token} />
       </>
     );
   }
