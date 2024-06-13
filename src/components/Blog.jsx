@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import blogServices from '../services/blogs';
 
-const Blog = ({ blog, token }) => {
+const Blog = ({ blog, user, deleteButtonAction }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
@@ -13,7 +13,7 @@ const Blog = ({ blog, token }) => {
 
   const likeButtonAction = async () => {
     blog.likes += 1;
-    const updatedBlog = await blogServices.updateBlog(blog, token);
+    const updatedBlog = await blogServices.updateBlog(blog, user.token);
     setLikes(updatedBlog.likes);
   };
 
@@ -23,13 +23,18 @@ const Blog = ({ blog, token }) => {
         <h4>
           {blog.title}, {blog.author}
         </h4>
-        <p>{blog.url}</p>
+        <a href={blog.url}>{blog.url}</a>
         <p>{blog.user.username.toString()}</p>
         <p>
           Likes: {likes}
           <button onClick={likeButtonAction}>Like</button>
         </p>
         <button onClick={() => setShowDetails(!showDetails)}>Hide</button>
+        <DeleteButton
+          user={user}
+          blog={blog}
+          deleteButtonAction={deleteButtonAction}
+        />
       </div>
     );
   }
@@ -40,8 +45,20 @@ const Blog = ({ blog, token }) => {
         {blog.title}, {blog.author}
       </h4>
       <button onClick={() => setShowDetails(!showDetails)}>View</button>
+      <DeleteButton
+        user={user}
+        blog={blog}
+        deleteButtonAction={deleteButtonAction}
+      />
     </div>
   );
+};
+
+const DeleteButton = ({ user, blog, deleteButtonAction }) => {
+  if (user.username === blog.user.username.toString()) {
+    return <button onClick={() => deleteButtonAction(blog.id)}>Delete</button>;
+  }
+  return null;
 };
 
 export default Blog;

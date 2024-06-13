@@ -3,6 +3,11 @@ import { useState } from 'react';
 const BlogForm = ({ addNewBlog }) => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' });
 
+  const addNewBlogButtonAction = () => {
+    setNewBlog({ title: '', author: '', url: '' });
+    addNewBlog(newBlog);
+  };
+
   return (
     <>
       <h2>Create new</h2>
@@ -42,7 +47,7 @@ const BlogForm = ({ addNewBlog }) => {
         />
       </div>
 
-      <button onClick={() => addNewBlog(newBlog)}>Add blog</button>
+      <button onClick={addNewBlogButtonAction}>Add blog</button>
     </>
   );
 };

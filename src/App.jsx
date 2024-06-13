@@ -53,6 +53,20 @@ const App = () => {
     }
   };
 
+  const deleteButtonAction = async (blogId) => {
+    if (!window.confirm('Are you sure you want to delete the blog?')) {
+      return;
+    }
+
+    try {
+      const deletedBlog = await blogService.deleteBlog(blogId, user.token);
+      setBlogs(blogs.filter((blog) => blog.title !== deletedBlog.title));
+      userNotification('deleted successfully', false);
+    } catch (exception) {
+      userNotification('trouble deleting blog', true);
+    }
+  };
+
   const logOutUser = () => {
     window.localStorage.removeItem('loggedInUser');
     setUser(null);
@@ -74,7 +88,11 @@ const App = () => {
         <Togglable ref={blogFormRef}>
           <BlogForm user={user} addNewBlog={addNewBlog} />
         </Togglable>
-        <BlogList blogs={blogs} token={user.token} />
+        <BlogList
+          blogs={blogs}
+          user={user}
+          deleteButtonAction={deleteButtonAction}
+        />
       </>
     );
   }
