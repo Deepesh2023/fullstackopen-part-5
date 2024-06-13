@@ -1,27 +1,27 @@
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react'
 
 const Togglable = forwardRef((props, refs) => {
-  const [hideBlogForm, setHideBlogForm] = useState(true);
+  const [hideBlogForm, setHideBlogForm] = useState(true)
 
   const formDisplay = () => {
-    setHideBlogForm(!hideBlogForm);
-  };
+    setHideBlogForm(!hideBlogForm)
+  }
 
   const hideFormAfterNewPost = () => {
-    setHideBlogForm(true);
-  };
+    setHideBlogForm(true)
+  }
 
   useImperativeHandle(refs, () => {
-    return { hideFormAfterNewPost };
-  });
+    return { hideFormAfterNewPost }
+  })
 
   const style1 = {
     display: 'none',
-  };
+  }
 
   const style2 = {
     display: '',
-  };
+  }
 
   return (
     <>
@@ -33,7 +33,9 @@ const Togglable = forwardRef((props, refs) => {
         <button onClick={formDisplay}>Cancel</button>
       </div>
     </>
-  );
-});
+  )
+})
 
-export default Togglable;
+Togglable.displayName = 'Togglable'
+
+export default Togglable

@@ -5,21 +5,21 @@ const Notification = ({ notification }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    };
+    }
 
     if (notification.isError) {
-      styles['border'] = '8px solid red';
-      styles['backgroundColor'] = '#f48b95';
+      styles['border'] = '8px solid red'
+      styles['backgroundColor'] = '#f48b95'
     } else {
-      styles['border'] = '8px solid green';
-      styles['backgroundColor'] = '#8cf78e';
+      styles['border'] = '8px solid green'
+      styles['backgroundColor'] = '#8cf78e'
     }
     return (
       <div style={styles}>
         <h3>{notification.message}</h3>
       </div>
-    );
+    )
   }
-};
+}
 
-export default Notification;
+export default Notification

@@ -1,19 +1,20 @@
-import { useState } from 'react';
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const LoginForm = ({ loginUser, userNotification }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const loginButtonAction = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      await loginUser({ username, password });
-      userNotification('Logged in!', false);
+      await loginUser({ username, password })
+      userNotification('Logged in!', false)
     } catch (exception) {
-      console.log(exception.response.data.error);
-      userNotification(exception.response.data.error, true);
+      console.log(exception.response.data.error)
+      userNotification(exception.response.data.error, true)
     }
-  };
+  }
 
   return (
     <>
@@ -42,7 +43,12 @@ const LoginForm = ({ loginUser, userNotification }) => {
         <button type="submit">Login</button>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default LoginForm;
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  userNotification: PropTypes.func.isRequired,
+}
+
+export default LoginForm

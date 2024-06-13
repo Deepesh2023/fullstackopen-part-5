@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 const BlogForm = ({ addNewBlog }) => {
-  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' });
+  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
   const addNewBlogButtonAction = () => {
-    setNewBlog({ title: '', author: '', url: '' });
-    addNewBlog(newBlog);
-  };
+    setNewBlog({ title: '', author: '', url: '' })
+    addNewBlog(newBlog)
+  }
 
   return (
     <>
@@ -49,7 +49,7 @@ const BlogForm = ({ addNewBlog }) => {
 
       <button onClick={addNewBlogButtonAction}>Add blog</button>
     </>
-  );
-};
+  )
+}
 
-export default BlogForm;
+export default BlogForm
