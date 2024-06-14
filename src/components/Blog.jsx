@@ -19,7 +19,7 @@ const Blog = ({ blog, user, deleteButtonAction }) => {
 
   if (showDetails) {
     return (
-      <div style={blogStyle}>
+      <div className="blog expanded" style={blogStyle}>
         <h4>
           {blog.title}, {blog.author}
         </h4>
@@ -29,7 +29,12 @@ const Blog = ({ blog, user, deleteButtonAction }) => {
           Likes: {likes}
           <button onClick={likeButtonAction}>Like</button>
         </p>
-        <button onClick={() => setShowDetails(!showDetails)}>Hide</button>
+        <button
+          className="hideButton"
+          onClick={() => setShowDetails(!showDetails)}
+        >
+          Hide
+        </button>
         <DeleteButton
           user={user}
           blog={blog}
@@ -40,11 +45,16 @@ const Blog = ({ blog, user, deleteButtonAction }) => {
   }
 
   return (
-    <div className="blog" style={blogStyle}>
+    <div className="blog compact" style={blogStyle}>
       <h4>
         {blog.title}, {blog.author}
       </h4>
-      <button onClick={() => setShowDetails(!showDetails)}>View</button>
+      <button
+        className="viewButton"
+        onClick={() => setShowDetails(!showDetails)}
+      >
+        View
+      </button>
       <DeleteButton
         user={user}
         blog={blog}

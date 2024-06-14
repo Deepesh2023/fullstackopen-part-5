@@ -1,5 +1,3 @@
-import { useCallback } from 'react'
-import blogs from '../services/blogs'
 import Blog from './Blog'
 import PropTypes from 'prop-types'
 
@@ -9,14 +7,17 @@ const BlogList = ({ blogs, user, deleteButtonAction }) => {
   return (
     <div>
       <h1>blogs</h1>
-      {sortedBlogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          user={user}
-          deleteButtonAction={deleteButtonAction}
-        />
-      ))}
+      <ul>
+        {sortedBlogs.map((blog) => (
+          <li key={blog.id}>
+            <Blog
+              blog={blog}
+              user={user}
+              deleteButtonAction={deleteButtonAction}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
