@@ -3,9 +3,9 @@ import { useState } from 'react'
 const BlogForm = ({ addNewBlog }) => {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
-  const addNewBlogButtonAction = () => {
+  const addNewBlogButtonAction = async () => {
+    await addNewBlog(newBlog)
     setNewBlog({ title: '', author: '', url: '' })
-    addNewBlog(newBlog)
   }
 
   return (
@@ -47,7 +47,9 @@ const BlogForm = ({ addNewBlog }) => {
         />
       </div>
 
-      <button onClick={addNewBlogButtonAction}>Add blog</button>
+      <button id="addNewBlogButton" onClick={addNewBlogButtonAction}>
+        Add blog
+      </button>
     </>
   )
 }

@@ -46,13 +46,11 @@ test('more details about the blog post such as url and likes are shown when the 
   render(<Blog blog={blog} user={user} />)
 
   const viewButton = screen.getByText('View')
-  screen.debug(viewButton)
 
   const userSimulation = userEvent.setup()
   await userSimulation.click(viewButton)
 
   const blogUrl = screen.getByText(blog.url)
-
   const blogLikes = screen.getByText(`Likes: ${blog.likes}`)
 
   expect(blogUrl, blogLikes).toBeDefined()
