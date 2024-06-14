@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogServices from '../services/blogs'
 
-const Blog = ({ blog, user, deleteButtonAction }) => {
+const Blog = ({ blog, user, likeBlog, deleteButtonAction }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -13,8 +13,8 @@ const Blog = ({ blog, user, deleteButtonAction }) => {
 
   const likeButtonAction = async () => {
     blog.likes += 1
-    const updatedBlog = await blogServices.updateBlog(blog, user.token)
-    setLikes(updatedBlog.likes)
+    await likeBlog(blog)
+    setLikes(blog.likes)
   }
 
   if (showDetails) {

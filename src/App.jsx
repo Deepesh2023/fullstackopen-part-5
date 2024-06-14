@@ -53,6 +53,11 @@ const App = () => {
     }
   }
 
+  const likeBlog = async (blog) => {
+    const updatedBlog = await blogService.updateBlog(blog, user.token)
+    return updatedBlog
+  }
+
   const deleteButtonAction = async (blogId) => {
     if (!window.confirm('Are you sure you want to delete the blog?')) {
       return
@@ -91,6 +96,7 @@ const App = () => {
         <BlogList
           blogs={blogs}
           user={user}
+          likeBlog={likeBlog}
           deleteButtonAction={deleteButtonAction}
         />
       </>

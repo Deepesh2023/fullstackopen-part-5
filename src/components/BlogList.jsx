@@ -1,7 +1,7 @@
 import Blog from './Blog'
 import PropTypes from 'prop-types'
 
-const BlogList = ({ blogs, user, deleteButtonAction }) => {
+const BlogList = ({ blogs, user, likeBlog, deleteButtonAction }) => {
   const sortedBlogs = blogs.toSorted((a, b) => b.likes - a.likes)
 
   return (
@@ -13,6 +13,7 @@ const BlogList = ({ blogs, user, deleteButtonAction }) => {
             <Blog
               blog={blog}
               user={user}
+              likeBlog={likeBlog}
               deleteButtonAction={deleteButtonAction}
             />
           </li>
