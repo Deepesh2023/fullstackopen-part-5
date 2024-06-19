@@ -5,7 +5,7 @@ const BlogList = ({ blogs, user, likeBlog, deleteButtonAction }) => {
   const sortedBlogs = blogs.toSorted((a, b) => b.likes - a.likes)
 
   return (
-    <div>
+    <div className="blogs">
       <h1>blogs</h1>
       <ul>
         {sortedBlogs.map((blog) => (

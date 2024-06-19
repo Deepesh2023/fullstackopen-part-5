@@ -15,7 +15,7 @@ const Notification = ({ notification }) => {
       styles['backgroundColor'] = '#8cf78e'
     }
     return (
-      <div style={styles}>
+      <div style={styles} className="notification">
         <h3>{notification.message}</h3>
       </div>
     )
